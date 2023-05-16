@@ -14,9 +14,11 @@ class Card
         @face_up = true
     end
 
-    def to_s
-    end
-    
-    def ==
-    end
+    # def to_s
+    # end
+
+    # def ==()
+
+
+    # end
 end

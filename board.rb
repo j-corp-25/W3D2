@@ -48,10 +48,10 @@ class Board
 
         puts "   0 1 2 3"
 
-        rows.each_with_index do |row, i| 
+        rows.each_with_index do |row, i|
             p "#{i} " + row.join(" ")
 
-        #     # row.each do |card| 
+        #     # row.each do |card|
         #     #     # if card.face_up
         #     #         p "#{card.value} "
         #     #     # else
@@ -62,9 +62,17 @@ class Board
     end
 
     def won?
+
+        @grid.flatten.all? { |cell| cell.face_up}
+
+
     end
 
-    def reveal
+    def reveal(guessed_pos)
+        if self[guessed_pos].face_up == false
+            self[guessed_pos].face_up = true
+        end
+        self[guessed_pos].value
     end
 end
 
