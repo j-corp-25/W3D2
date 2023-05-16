@@ -1,9 +1,11 @@
 require_relative "card.rb"
+require "byebug"
 
 class Board
+    attr_accessor :grid
 
     def initialize
-        @grid = Array.new(4) {Array.new(4, Card.new)}
+        @grid = Array.new(4){Array.new(4){Card.new}}
     end
 
     def [](position)
@@ -11,7 +13,7 @@ class Board
         @grid[row][col]
     end
 
-    def [](position,value)
+    def []=(position,value)
         row,col = position
         @grid[row][col] = value
     end
@@ -20,25 +22,42 @@ class Board
         values = [:A,:B,:C,:D,:E,:F,:G,:H]
         values.each do |v|
             until @grid.flatten.count {|card| card.value == v} == 2
+            # debugger
                 row = rand(0...@grid.length)
                 col = rand(0...@grid.length)
-                pos = row,col
-                @grid[pos].value = v if @grid[pos].value == nil
+                pos = [row,col]
+                self[pos].value = v if self[pos].value == nil
             end
         end
     end
 
     def render
-        puts "0 1 2 3"
-        @grid.each_with_index do |row, i| 
-            p "#{i} "
-            row.each do |card| 
+        rows = []
+
+        @grid.each do |row|
+            level = []
+            row.each do |card|
                 if card.face_up
-                    p "#{card.value} "
+                    level << card.value
                 else
-                    p "  "
+                    level << "_"
                 end
             end
+            rows << level
+        end
+
+        puts "   0 1 2 3"
+
+        rows.each_with_index do |row, i| 
+            p "#{i} " + row.join(" ")
+
+        #     # row.each do |card| 
+        #     #     # if card.face_up
+        #     #         p "#{card.value} "
+        #     #     # else
+        #     #     #     p "  "
+        #     #     # end
+        #     # end
         end
     end
 
@@ -48,3 +67,7 @@ class Board
     def reveal
     end
 end
+
+b1 = Board.new
+b1.populate
+# b1.render

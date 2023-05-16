@@ -1,4 +1,4 @@
-def Card
+class Card
     attr_accessor :value, :face_up, :face_down
 
     def initialize
